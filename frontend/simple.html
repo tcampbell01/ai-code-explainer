@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Code Explainer</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 20px; 
+            line-height: 1.6;
+        }
+        textarea { 
+            width: 100%; 
+            height: 200px; 
+            padding: 10px; 
+            margin: 10px 0; 
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button { 
+            padding: 10px 20px; 
+            margin: 10px 5px 10px 0; 
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover { background: #0056b3; }
+        select { 
+            padding: 8px; 
+            margin: 0 10px 0 0; 
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .result { 
+            border: 1px solid #ddd; 
+            padding: 20px; 
+            margin: 20px 0; 
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+        .loading { color: #666; }
+        h2 { color: #333; margin-top: 0; }
+        h3 { 
+            color: #495057; 
+            margin-top: 25px; 
+            margin-bottom: 10px;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 5px;
+        }
+        ul { 
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        li { 
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+        .gotcha { color: #dc3545; }
+        .improvement { color: #28a745; }
+        a { color: #007bff; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        
+        .chat-section {
+            margin-top: 30px;
+            border-top: 2px solid #e9ecef;
+            padding-top: 20px;
+        }
+        .chat-messages {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+            background: #f8f9fa;
+        }
+        .chat-input {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .message {
+            margin: 10px 0;
+            padding: 8px;
+            border-radius: 4px;
+        }
+        .user-message {
+            background: #e3f2fd;
+            text-align: right;
+        }
+        .ai-message {
+            background: #f1f8e9;
+        }
+        .ai-message a {
+            color: #007bff;
+            text-decoration: underline;
+        }
+        .ai-message ul {
+            margin: 10px 0;
+        }
+        .ai-message li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>AI Code Explainer</h1>
+    
+    <textarea id="code" placeholder="Paste your code here..."></textarea>
+    
+    <div>
+        <select id="language">
+            <option value="python">Python</option>
+            <option value="javascript">JavaScript</option>
+            <option value="java">Java</option>
+            <option value="cpp">C++</option>
+        </select>
+        
+        <select id="level">
+            <option value="beginner">Beginner</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="expert">Expert</option>
+        </select>
+        
+        <button onclick="explainCode()">Explain Code</button>
+    </div>
+    
+    <div id="result"></div>
+
+    <div id="chat-section" class="chat-section" style="display: none;">
+        <h2>Ask Questions About This Code</h2>
+        <div id="chat-messages" class="chat-messages"></div>
+        <div class="chat-input">
+            <input type="text" id="chat-input" placeholder="Ask a question about the code..." onkeypress="handleChatKeypress(event)">
+            <button onclick="sendChatMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        let currentCode = '';
+        let currentLanguage = '';
+        let currentLevel = '';
+
+        async function explainCode() {
+            const code = document.getElementById('code').value;
+            const language = document.getElementById('language').value;
+            const level = document.getElementById('level').value;
+            const resultDiv = document.getElementById('result');
+            
+            if (!code.trim()) {
+                alert('Please enter some code');
+                return;
+            }
+            
+            // Store current context for chat
+            currentCode = code;
+            currentLanguage = language;
+            currentLevel = level;
+            
+            resultDiv.innerHTML = '<div class="loading">Explaining code...</div>';
+            
+            try {
+                const response = await fetch('http://localhost:8000/explain', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ code, language, level })
+                });
+                
+                const result = await response.json();
+                
+                let html = `
+                    <div class="result">
+                        <h2>Explanation</h2>
+                        <p><strong>Summary:</strong> ${result.summary}</p>
+                        
+                        <h3>Walkthrough</h3>
+                        <ul>${(result.walkthrough || []).map(step => `<li>${step}</li>`).join('')}</ul>
+                        
+                        <h3>Key Concepts</h3>
+                        <ul>${(result.concepts || []).map(item => {
+                            const concept = typeof item === 'string' ? item : item.concept;
+                            const url = typeof item === 'object' && item.learn_more_url ? item.learn_more_url : null;
+                            return `<li>${concept}${url ? ` - <a href="${url}" target="_blank">Learn more</a>` : ''}</li>`;
+                        }).join('')}</ul>
+                `;
+                
+                if (result.gotchas && result.gotchas.length > 0) {
+                    html += `<h3>Gotchas (Things to Watch Out For)</h3><ul>${result.gotchas.map(gotcha => `<li class="gotcha">${gotcha}</li>`).join('')}</ul>`;
+                }
+                
+                if (result.improvements && result.improvements.length > 0) {
+                    html += `<h3>Improvements</h3><ul>${result.improvements.map(improvement => `<li class="improvement">${improvement}</li>`).join('')}</ul>`;
+                }
+                
+                html += '</div>';
+                resultDiv.innerHTML = html;
+                
+                // Show chat section
+                document.getElementById('chat-section').style.display = 'block';
+                document.getElementById('chat-messages').innerHTML = '';
+                
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="result" style="color: red;">Error: ${error.message}</div>`;
+            }
+        }
+
+        async function sendChatMessage() {
+            const input = document.getElementById('chat-input');
+            const question = input.value.trim();
+            
+            if (!question) return;
+            
+            const messagesDiv = document.getElementById('chat-messages');
+            
+            // Add user message
+            messagesDiv.innerHTML += `<div class="message user-message"><strong>You:</strong> ${question}</div>`;
+            
+            // Clear input
+            input.value = '';
+            
+            // Add loading message
+            messagesDiv.innerHTML += `<div class="message ai-message" id="loading-msg"><strong>AI:</strong> Thinking...</div>`;
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            
+            try {
+                const response = await fetch('http://localhost:8000/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        question, 
+                        code: currentCode, 
+                        language: currentLanguage, 
+                        level: currentLevel 
+                    })
+                });
+                
+                const result = await response.json();
+                
+                // Format the response for better readability
+                let formattedAnswer = result.answer
+                    // Convert **bold** to HTML bold
+                    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+                    // Convert markdown links [text](url) to HTML links
+                    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>')
+                    // Convert line breaks to proper spacing
+                    .replace(/\n\n/g, '<br><br>')
+                    .replace(/\n/g, '<br>');
+                
+                // Now find and convert standalone URLs (simple approach)
+                formattedAnswer = formattedAnswer.replace(/(^|\s)(https?:\/\/[^\s<>]+)/g, '$1<a href="$2" target="_blank">$2</a>');
+                
+                // Replace loading message with formatted response
+                document.getElementById('loading-msg').innerHTML = `<strong>AI:</strong> ${formattedAnswer}`;
+                document.getElementById('loading-msg').id = '';
+                
+            } catch (error) {
+                document.getElementById('loading-msg').innerHTML = `<strong>AI:</strong> Sorry, I encountered an error: ${error.message}`;
+                document.getElementById('loading-msg').id = '';
+            }
+            
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function handleChatKeypress(event) {
+            if (event.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+    </script>
+</body>
+</html>
