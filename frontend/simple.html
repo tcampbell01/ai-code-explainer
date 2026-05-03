@@ -149,6 +149,7 @@
         let currentCode = '';
         let currentLanguage = '';
         let currentLevel = '';
+        const API_BASE_URL = 'http://127.0.0.1:8000';
 
         async function explainCode() {
             const code = document.getElementById('code').value;
@@ -169,7 +170,7 @@
             resultDiv.innerHTML = '<div class="loading">Explaining code...</div>';
             
             try {
-                const response = await fetch('http://localhost:8000/explain', {
+                const response = await fetch(`${API_BASE_URL}/explain`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ code, language, level })
@@ -232,7 +233,7 @@
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
             
             try {
-                const response = await fetch('http://localhost:8000/chat', {
+                const response = await fetch(`${API_BASE_URL}/chat`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 

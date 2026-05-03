@@ -35,7 +35,6 @@ cd backend
 pip install -r requirements.txt
 
 # Configure environment
-cp .env.example .env
 # Edit .env and add your Anthropic API key:
 # ANTHROPIC_API_KEY=your_actual_key_here
 
@@ -126,7 +125,7 @@ Interactive chat about explained code.
 ANTHROPIC_API_KEY=your_anthropic_key_here
 
 # Optional
-MODEL_NAME=claude-3-haiku-20240307
+MODEL_NAME=claude-haiku-4-5-20251001
 ```
 
 ### Supported Languages

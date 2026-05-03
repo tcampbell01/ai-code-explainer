@@ -1,0 +1,181 @@
+<svg width="1200" height="800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="800" fill="white"/>
+  
+  <!-- Title -->
+  <text x="600" y="50" text-anchor="middle" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#2c3e50">
+    AI Code Explainer - System Architecture
+  </text>
+  
+  <!-- Browser Interface -->
+  <rect x="50" y="90" width="1100" height="80" fill="#f8f9fa" stroke="#333" stroke-width="2" rx="10"/>
+  <text x="600" y="120" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#333">
+    Web Browser Interface
+  </text>
+  <text x="600" y="145" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#666">
+    Users access via http://localhost:3000 • Paste code • Select language & skill level • Get explanations
+  </text>
+  
+  <!-- Frontend Layer -->
+  <rect x="50" y="210" width="500" height="180" fill="#e3f2fd" stroke="#1976d2" stroke-width="3" rx="10"/>
+  <text x="300" y="240" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#1976d2">
+    Frontend Layer
+  </text>
+  
+  <rect x="80" y="260" width="200" height="50" fill="white" stroke="#1976d2" stroke-width="2" rx="5"/>
+  <text x="180" y="280" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">
+    Web Interface
+  </text>
+  <text x="180" y="295" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#666">
+    HTML + JavaScript
+  </text>
+  
+  <rect x="320" y="260" width="200" height="50" fill="white" stroke="#1976d2" stroke-width="2" rx="5"/>
+  <text x="420" y="280" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">
+    Interactive Chat
+  </text>
+  <text x="420" y="295" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#666">
+    Real-time Q&amp;A
+  </text>
+  
+  <rect x="80" y="320" width="440" height="50" fill="white" stroke="#1976d2" stroke-width="2" rx="5"/>
+  <text x="300" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">
+    Multi-level explanations • Python, JavaScript, Java, C++
+  </text>
+  <text x="300" y="355" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#666">
+    Beginner, Intermediate, Expert levels
+  </text>
+  
+  <!-- Backend Layer -->
+  <rect x="650" y="210" width="500" height="180" fill="#e8f5e8" stroke="#388e3c" stroke-width="3" rx="10"/>
+  <text x="900" y="240" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#388e3c">
+    Backend Layer (FastAPI)
+  </text>
+  
+  <rect x="680" y="260" width="140" height="50" fill="white" stroke="#388e3c" stroke-width="2" rx="5"/>
+  <text x="750" y="280" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">
+    API Endpoints
+  </text>
+  <text x="750" y="295" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#666">
+    /explain • /chat
+  </text>
+  
+  <rect x="840" y="260" width="140" height="50" fill="white" stroke="#388e3c" stroke-width="2" rx="5"/>
+  <text x="910" y="280" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">
+    Processing
+  </text>
+  <text x="910" y="295" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#666">
+    Validation • Routing
+  </text>
+  
+  <rect x="1000" y="260" width="140" height="50" fill="white" stroke="#388e3c" stroke-width="2" rx="5"/>
+  <text x="1070" y="280" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">
+    JSON Response
+  </text>
+  <text x="1070" y="295" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#666">
+    Structured Output
+  </text>
+  
+  <rect x="680" y="320" width="460" height="50" fill="white" stroke="#388e3c" stroke-width="2" rx="5"/>
+  <text x="910" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">
+    CORS enabled • Environment configuration • Error handling
+  </text>
+  <text x="910" y="355" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#666">
+    Request/Response processing
+  </text>
+  
+  <!-- AI Service Layer -->
+  <rect x="200" y="430" width="800" height="120" fill="#ffebee" stroke="#d32f2f" stroke-width="3" rx="10"/>
+  <text x="600" y="460" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#d32f2f">
+    AI Service Layer
+  </text>
+  
+  <rect x="250" y="480" width="200" height="50" fill="white" stroke="#d32f2f" stroke-width="2" rx="5"/>
+  <text x="350" y="500" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">
+    Claude Haiku API
+  </text>
+  <text x="350" y="515" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#666">
+    Anthropic Integration
+  </text>
+  
+  <rect x="500" y="480" width="200" height="50" fill="white" stroke="#d32f2f" stroke-width="2" rx="5"/>
+  <text x="600" y="500" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">
+    Prompt Engineering
+  </text>
+  <text x="600" y="515" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#666">
+    Level-specific prompts
+  </text>
+  
+  <rect x="750" y="480" width="200" height="50" fill="white" stroke="#d32f2f" stroke-width="2" rx="5"/>
+  <text x="850" y="500" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">
+    Response Processing
+  </text>
+  <text x="850" y="515" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#666">
+    JSON extraction
+  </text>
+  
+  <!-- Data Layer -->
+  <rect x="50" y="590" width="1100" height="120" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="3" rx="10"/>
+  <text x="600" y="620" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#7b1fa2">
+    Data &amp; Configuration Layer
+  </text>
+  
+  <rect x="190" y="640" width="180" height="50" fill="white" stroke="#7b1fa2" stroke-width="2" rx="5"/>
+  <text x="280" y="660" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">
+    URL Database
+  </text>
+  <text x="280" y="675" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#666">
+    Learning resources
+  </text>
+  
+  <rect x="410" y="640" width="180" height="50" fill="white" stroke="#7b1fa2" stroke-width="2" rx="5"/>
+  <text x="500" y="660" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">
+    Environment Config
+  </text>
+  <text x="500" y="675" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#666">
+    API keys • Settings
+  </text>
+  
+  <rect x="630" y="640" width="180" height="50" fill="white" stroke="#7b1fa2" stroke-width="2" rx="5"/>
+  <text x="720" y="660" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">
+    Response Schema
+  </text>
+  <text x="720" y="675" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#666">
+    Pydantic models
+  </text>
+  
+  <rect x="850" y="640" width="180" height="50" fill="white" stroke="#7b1fa2" stroke-width="2" rx="5"/>
+  <text x="940" y="660" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">
+    Future: Search API
+  </text>
+  <text x="940" y="675" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#666">
+    Google Custom Search
+  </text>
+  
+  <!-- Data Flow Arrows -->
+  <path d="M 400 170 L 400 210" stroke="#333" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 550 300 L 650 300" stroke="#333" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  <text x="600" y="290" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">HTTP/JSON</text>
+  <path d="M 900 390 L 700 430" stroke="#333" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 600 550 L 600 590" stroke="#333" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  
+  <!-- Technology Stack -->
+  <rect x="50" y="740" width="1100" height="40" fill="#333" rx="5"/>
+  <text x="600" y="765" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">
+    Tech Stack: FastAPI • Python • JavaScript • Claude Haiku • Pydantic • Uvicorn • HTML/CSS
+  </text>
+</svg>oke="#333" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 600 550 L 600 590" stroke="#333" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  
+  <!-- Technology Stack -->
+  <rect x="50" y="740" width="1100" height="40" fill="#333" rx="5"/>
+  <text x="600" y="765" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">
+    Tech Stack: FastAPI • Python • JavaScript • Claude Haiku • Pydantic • Uvicorn • HTML/CSS
+  </text>
+</svg>

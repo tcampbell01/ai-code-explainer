@@ -2,7 +2,7 @@ import os
 import anthropic
 
 def get_model():
-    return os.environ.get("MODEL_NAME", "claude-3-haiku-20240307")
+    return os.environ.get("MODEL_NAME", "claude-haiku-4-5-20251001")
 
 def explain_code(prompt: str) -> str:
     client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
