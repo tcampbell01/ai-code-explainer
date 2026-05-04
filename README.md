@@ -6,6 +6,44 @@ Frontend-Backend Communication: The frontend sends a POST request to the FastAPI
 
 For a follow up chat, the frontend stores the current code, language, and level as JavaScript variables and sends them again with each question. 
 
+## How It Works
+
+1. **User Interface**  
+   The user interface is defined in [simple.html](https://github.com/tcampbell01/ai-code-explainer/blob/main/frontend/simple.html) - Lines [118-135](https://github.com/tcampbell01/ai-code-explainer/blob/main/frontend/simple.html#L118-L135) define the textarea and select elements, and the `explainCode` function starts at [Line 154](https://github.com/tcampbell01/ai-code-explainer/blob/main/frontend/simple.html#L154).
+
+2. **Frontend sends POST request to /explain endpoint**  
+   The frontend sends a POST request to the `/explain` endpoint, as shown in [Lines 173-177](https://github.com/tcampbell01/ai-code-explainer/blob/main/frontend/simple.html#L173-L177) of [simple.html](https://github.com/tcampbell01/ai-code-explainer/blob/main/frontend/simple.html).
+
+3. **Backend receives request**  
+   The request is received and processed by the backend, with the main `/explain` endpoint handler outlined in [Lines 33-72](https://github.com/tcampbell01/ai-code-explainer/blob/main/backend/app/main.py#L33-L72) of [main.py](https://github.com/tcampbell01/ai-code-explainer/blob/main/backend/app/main.py).
+
+4. **Request validation with Pydantic**  
+   Input validation is performed using Pydantic schemas, specifically the `ExplainRequest` model defined in [Lines 6-9](https://github.com/tcampbell01/ai-code-explainer/blob/main/backend/app/schemas.py#L6-L9) of [schemas.py](https://github.com/tcampbell01/ai-code-explainer/blob/main/backend/app/schemas.py).
+
+5. **Prompt construction**  
+   The LLM prompt is constructed using the code, language, and level parameters in the `build_prompt` function in [Lines 3-26](https://github.com/tcampbell01/ai-code-explainer/blob/main/backend/app/prompts.py#L3-L26) of [prompts.py](https://github.com/tcampbell01/ai-code-explainer/blob/main/backend/app/prompts.py).
+
+6. **LLM API call**  
+   The prompt is sent to Claude Haiku via the `explain_code` function in [Lines 7-19](https://github.com/tcampbell01/ai-code-explainer/blob/main/backend/app/llm.py#L7-L19) of [llm.py](https://github.com/tcampbell01/ai-code-explainer/blob/main/backend/app/llm.py).
+
+7. **JSON parsing and extraction**  
+   The response from Claude is parsed to extract JSON in [Lines 45-56](https://github.com/tcampbell01/ai-code-explainer/blob/main/backend/app/main.py#L45-L56) of [main.py](https://github.com/tcampbell01/ai-code-explainer/blob/main/backend/app/main.py).
+
+8. **URL enrichment**  
+   Verified learning resource URLs are added to each concept in [Lines 58-64](https://github.com/tcampbell01/ai-code-explainer/blob/main/backend/app/main.py#L58-L64) of [main.py](https://github.com/tcampbell01/ai-code-explainer/blob/main/backend/app/main.py).
+
+9. **Response creation**  
+   The response is validated against the `ExplainResponse` schema and returned to the frontend, as defined in [Lines 28-35](https://github.com/tcampbell01/ai-code-explainer/blob/main/backend/app/schemas.py#L28-L35) of [schemas.py](https://github.com/tcampbell01/ai-code-explainer/blob/main/backend/app/schemas.py).
+
+10. **Frontend renders results**  
+    The results are rendered in the browser and displayed to the user in [Lines 181-206](https://github.com/tcampbell01/ai-code-explainer/blob/main/frontend/simple.html#L181-L206) of [simple.html](https://github.com/tcampbell01/ai-code-explainer/blob/main/frontend/simple.html).
+
+11. **Interactive chat flow**  
+    - User sends follow-up questions via [Lines 217-245](https://github.com/tcampbell01/ai-code-explainer/blob/main/frontend/simple.html#L217-L245) of [simple.html](https://github.com/tcampbell01/ai-code-explainer/blob/main/frontend/simple.html)
+    - The `/chat` endpoint processes the request in [Lines 74-87](https://github.com/tcampbell01/ai-code-explainer/blob/main/backend/app/main.py#L74-L87) of [main.py](https://github.com/tcampbell01/ai-code-explainer/blob/main/backend/app/main.py)
+    - Chat handling is done via the `chat_with_claude` function in [Lines 21-33](https://github.com/tcampbell01/ai-code-explainer/blob/main/backend/app/llm.py#L21-L33) of [llm.py](https://github.com/tcampbell01/ai-code-explainer/blob/main/backend/app/llm.py)
+    - The response is formatted and displayed in [Lines 250-263](https://github.com/tcampbell01/ai-code-explainer/blob/main/frontend/simple.html#L250-L263) of [simple.html](https://github.com/tcampbell01/ai-code-explainer/blob/main/frontend/simple.html)
+
 ## Features
 
 - **Multi-Level Explanations**: Tailored explanations for beginner, intermediate, and expert developers
