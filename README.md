@@ -2,6 +2,10 @@
 
 An intelligent code explanation tool that uses Claude Haiku to provide detailed, level-appropriate explanations of code snippets. Features include interactive chat, curated learning resources, and explanations tailored to beginner, intermediate, or expert levels.
 
+Frontend-Backend Communication: The frontend sends a POST request to the FastAPI backend with the code pasted into the UI, the selected language, and the selected level.  The backend validates the data with Pydantic (a python library that is used for data validation and serialization), builds a prompt, calls Claude, parses the structured JSON response, and sends back fields like summary, walkthrough, concepts, and improvements. 
+
+For a follow up chat, the frontend stores the current code, language, and level as JavaScript variables and sends them again with each question. 
+
 ## Features
 
 - **Multi-Level Explanations**: Tailored explanations for beginner, intermediate, and expert developers
